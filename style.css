@@ -1,0 +1,20 @@
+
+:root{--ink:#16364a;--muted:#607988;--cyan:#007d98;--bg:#f3f8fa;--border:#cbdde4}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:#087e99;color:white;padding:18px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{font-size:clamp(22px,3vw,30px);margin:4px 0}header small{letter-spacing:.05em}
+.topnav{display:flex;flex-wrap:wrap;gap:8px;background:white;padding:12px clamp(16px,4vw,48px);border-bottom:1px solid var(--border)}
+.topnav a{color:var(--cyan);padding:8px 12px;border-radius:7px;text-decoration:none;background:#e9f5f8}
+main{max-width:1200px;margin:24px auto;padding:0 16px}.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 4px 20px #0b4d6310}
+h2{margin:0 0 14px;font-size:22px}h3{margin:18px 0 10px}.muted{color:var(--muted)}.hide{display:none!important}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.wide{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:5px;font-weight:600;font-size:13px}
+input,select,textarea{width:100%;padding:10px 12px;font:inherit;color:var(--ink);border:1px solid #b6ccd6;border-radius:7px;background:white}
+textarea{min-height:84px;resize:vertical}button{background:var(--cyan);color:white;border:0;border-radius:7px;padding:10px 15px;font:inherit;cursor:pointer}
+button.secondary{background:#e4eff3;color:#1a5368}button:hover{filter:brightness(.95)}
+.toolbar,.actionbar{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:12px 0}
+.toolbar label{min-width:140px;flex:1}.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:680px;font-size:13px}
+th,td{padding:10px 9px;border-bottom:1px solid #dbe8ed;text-align:left;vertical-align:top}th{background:#e9f4f7;white-space:nowrap}
+.status{padding:10px 0;color:#1d7282}.status.error{color:#b52929}.auth{max-width:440px;margin:40px auto}.auth label{margin:10px 0}
+@media(max-width:600px){.panel{padding:14px}header{padding:15px}main{margin:14px auto}.toolbar{align-items:stretch}.toolbar label{min-width:100%}}
+@media print{header,.topnav,button,.no-print,.toolbar{display:none!important}body{background:white}.panel{box-shadow:none;border:0;padding:0}main{max-width:none;margin:0}table{font-size:10px}}
