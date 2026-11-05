@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IGMCRI Faculty QR</title><style>body{margin:0;background:#edf6f7;color:#123a42;font:16px Arial}header{background:#00383d;color:#fff;padding:22px;text-align:center}main{max-width:650px;margin:22px auto;padding:22px;background:#fff;border-radius:16px;box-shadow:0 6px 25px #00383d1c}label{display:block;font-weight:700;margin:15px 0 5px}input,select{width:100%;box-sizing:border-box;padding:12px;border:1px solid #a7c8ce;border-radius:8px;font-size:16px}button{background:#00555e;color:white;border:0;padding:12px 16px;border-radius:8px;cursor:pointer}button:disabled{opacity:.5}small{color:#56727a}.row{display:flex;gap:10px;align-items:center}.row input{flex:1}.row button{white-space:nowrap}#qr{text-align:center;margin:18px}#qr canvas{max-width:100%;height:auto}#status{padding:10px;background:#e4f2f3;border-radius:8px}.warn{color:#a43d24}</style></head><body><header><h2>IGMCRI — UG Attendance</h2>Faculty QR Generator</header><main><p><small>Student form is linked automatically. Keep both HTML files in the same hosted folder.</small></p><label>Faculty Session ID</label><input id="sid" placeholder="e.g. SURG-UG-2026-10-23"><label>Classroom code (announce verbally)</label><div class="row"><input id="code" type="password" placeholder="Enter classroom code"><button id="toggle" type="button">Show</button></div><p><button id="start">Start 5-minute session</button> <button id="stop" disabled>Stop</button></p><p id="status">Enter the faculty Session ID and classroom code to start.</p><div id="qr"></div><p id="countdown"></p><small>QR changes every 10 seconds. Classroom code is not included in QR URL. This standalone display does NOT provide server-side verification; attendance cannot be securely recorded until backend deployment.</small></main><script>
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IGMCRI Faculty QR</title><style>body{margin:0;background:#edf6f7;color:#123a42;font:16px Arial}header{background:#00383d;color:#fff;padding:22px;text-align:center}main{max-width:650px;margin:22px auto;padding:22px;background:#fff;border-radius:16px;box-shadow:0 6px 25px #00383d1c}label{display:block;font-weight:700;margin:15px 0 5px}input,select{width:100%;box-sizing:border-box;padding:12px;border:1px solid #a7c8ce;border-radius:8px;font-size:16px}button{background:#00555e;color:white;border:0;padding:12px 16px;border-radius:8px;cursor:pointer}button:disabled{opacity:.5}small{color:#56727a}.row{display:flex;gap:10px;align-items:center}.row input{flex:1}.row button{white-space:nowrap}#qr{text-align:center;margin:18px}#qr canvas{max-width:100%;height:auto}#status{padding:10px;background:#e4f2f3;border-radius:8px}.warn{color:#a43d24}</style></head><body><header><h2>IGMCRI — UG Attendance</h2>Faculty QR Generator</header><main><label>Student form URL (must be hosted online)</label><input id="url" placeholder="https://your-site.example/UG_Attendance_Student.html"><small>Never use example.org. Upload the student form to an HTTPS website and paste its real address here.</small><label>Faculty Session ID</label><input id="sid" placeholder="e.g. SURG-UG-2026-10-23"><label>Classroom code (announce verbally)</label><div class="row"><input id="code" type="password" placeholder="Enter classroom code"><button id="toggle" type="button">Show</button></div><p><button id="start">Start 5-minute session</button> <button id="stop" disabled>Stop</button></p><p id="status">Enter the hosted form URL and session ID to start.</p><div id="qr"></div><p id="countdown"></p><small>QR changes every 10 seconds. Classroom code is not included in QR URL. This standalone display does NOT provide server-side verification; attendance cannot be securely recorded until backend deployment.</small></main><script>
 const qrModules={};
 function qrRequire(path){const name=path.replace('./','');if(!qrModules[name])throw Error('QR module missing: '+name);return qrModules[name];}
 (function(){const module={exports:{}};const exports=module.exports;const require=qrRequire;
@@ -347,8 +347,7 @@ QRRSBlock.RS_BLOCK_TABLE = [
 	// 31
 	[13, 145, 115, 3, 146, 116],
 	[2, 74, 46, 29, 75, 47],
-	[42, 54, 24, 1, 55, 25],
-	[23, 45, 15, 28, 46, 16],
+	[42, 54, 24, 1, 55, 25],	[23, 45, 15, 28, 46, 16],
 
 	// 32
 	[17, 145, 115],
@@ -697,8 +696,7 @@ var QRUtil = {
 
                 for (var r = -1; r <= 1; r++) {
 
-                    if (row + r < 0 || moduleCount <= row + r) {
-                        continue;
+                    if (row + r < 0 || moduleCount <= row + r) {                        continue;
                     }
 
                     for (var c = -1; c <= 1; c++) {
@@ -1047,8 +1045,7 @@ QRCode.prototype = {
 	
 		// vertical		
 		for (var v = 0; v < 15; v++) {
-	
-			mod = (!test && ( (bits >> v) & 1) === 1);
+				mod = (!test && ( (bits >> v) & 1) === 1);
 	
 			if (v < 6) {
 				this.modules[v][8] = mod;
@@ -1272,6 +1269,6 @@ $('stop').onclick=stop;
 function tick(){let remaining=Math.max(0,300-Math.floor((Date.now()-started)/1000));if(!remaining){stop();return}
 let windowNo=Math.floor(Date.now()/10000);$('countdown').textContent='Session: '+Math.floor(remaining/60)+':'+String(remaining%60).padStart(2,'0')+' · Next QR in '+(10-Math.floor(Date.now()/1000)%10)+'s';
 if(windowNo===last)return;last=windowNo;
-let u=new URL('UG_Attendance_Student.html',location.href);u.searchParams.set('session',$('sid').value.trim());u.searchParams.set('tick',String(windowNo));try{drawQR($('qr'),u.toString());$('status').textContent=location.protocol==='file:'?'QR visible, but mobile scanning requires hosting both files on HTTPS.':'QR active — students scan this code';}catch(e){$('status').textContent='QR error: '+e.message}}
-$('start').onclick=()=>{try{let u=new URL('UG_Attendance_Student.html',location.href);if(!$('sid').value.trim()||!$('code').value.trim())throw Error('Enter Session ID and classroom code');started=Date.now();last=-1;$('start').disabled=true;$('stop').disabled=false;tick();timer=setInterval(tick,500)}catch(e){$('status').textContent=e.message}}
+let u=new URL($('url').value);u.searchParams.set('session',$('sid').value.trim());u.searchParams.set('tick',String(windowNo));try{drawQR($('qr'),u.toString());$('status').textContent='QR active — students scan this code';}catch(e){$('status').textContent='QR error: '+e.message}}
+$('start').onclick=()=>{try{let u=new URL($('url').value);if(!['https:','http:'].includes(u.protocol))throw Error('Use an HTTPS student form URL');if(u.hostname==='example.org'||u.hostname.endsWith('.example'))throw Error('Replace the demonstration URL with your hosted student form URL');if(!$('sid').value.trim()||!$('code').value.trim())throw Error('Enter Session ID and classroom code');started=Date.now();last=-1;$('start').disabled=true;$('stop').disabled=false;tick();timer=setInterval(tick,500)}catch(e){$('status').textContent=e.message}}
 </script></body></html>
